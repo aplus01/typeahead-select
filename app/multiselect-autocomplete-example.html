@@ -1,0 +1,27 @@
+<mat-form-field class="example-full-width">
+	<input type="text" placeholder="Select Users" aria-label="Select Users" matInput [matAutocomplete]="auto" [formControl]="commodityControl">
+	<mat-icon matSuffix>{{selectedIcon}}</mat-icon>
+	<mat-hint>Enter text to find users by name</mat-hint>
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+	<mat-option *ngFor="let c of filteredCommodities | async" [value]="selectedCommodities">
+		<div (click)="optionClicked($event, c)">
+			<mat-icon>{{c.icon}}</mat-icon>{{ c.commodityName }}
+		</div>
+	</mat-option>
+</mat-autocomplete>
+
+<br><br>
+
+<label>Selected Commodity:</label>
+<mat-list dense>
+	<mat-list-item *ngIf="selectedCommodity; else noCommodity">{{selectedCommodity.commodityName}}
+		<mat-icon>
+			{{selectedCommodity.icon}}
+		</mat-icon>
+	</mat-list-item>
+	<ng-template #noCommodity>
+		(None)
+	</ng-template>
+</mat-list>
